@@ -84,8 +84,6 @@ def read_bb_list(f, module_count):
 
 def DCov_dead_module_elimination(modules, bbs):
     delete = []
-    import pdb
-    pdb.set_trace()
     for i in range(len(bbs)):
         if len(bbs[i]) == 0:
             delete.insert(0, i)
