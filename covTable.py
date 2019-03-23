@@ -2,10 +2,6 @@ import cutter
 from pathlib import Path
 from PySide2.QtWidgets import QTableWidgetItem
 from PySide2.QtCore import Qt
-def initCovTable(covTable, modules, bbs):
-    covTable.bbs = bbs
-    covTable.modules = modules
-    refresh(covTable)
 
 def getmodule_idx(modules, module):
     for i in range(len(modules)):
@@ -36,33 +32,30 @@ def centered_text(x):
 def hexpad(num, pad):
     return "{0:#0{1}x}".format(num,pad + 2)
 
-def refresh(covTable):
+def analyse(config):
     functions = cutter.cmdj("aflj")
     module = Path(cutter.cmdj("ij")['core']['file']).name
-    idx = getmodule_idx(covTable.modules, module)
+    idx = getmodule_idx(config['modules'], module)
     # [coverage, name, address, instruction hits, basic block hits]
+    config['bb_hits'] = set()
+    config['table'] = []
     for function in functions:
-        entry = {}
-        entry['name'] = function['name']
-        entry['address'] = function['offset']
-        bbs = cutter.cmdj("afbj @" + entry['name'])
-        ins_count = 0
-        ins_hits = 0
+        entry = ["","","","",""]
+        entry[1] = function['name']
+        entry[2] = hexpad(function['offset'], 8)
+        bbs = cutter.cmdj("afbj @" + function['name'])
+        inst_count = 0
+        inst_hits = 0
         bbs_count = 0
         bbs_hits = 0
         for bb in bbs:
             bbs_count += 1
-            ins_count += bb['ninstr']
-            if bb['addr'] in covTable.bbs[idx]:
+            inst_count += bb['ninstr']
+            if bb['addr'] in config['bbs'][idx]:
                 bbs_hits += 1
-                ins_hits += bb['ninstr']
-        entry['ins_hits'] = str(ins_hits) + "/" + str(ins_count)
-        entry['bbs_hits'] = str(bbs_hits) + "/" + str(bbs_count)
-        entry['coverage'] = str(round(ins_hits*100/ins_count,1)) + "%"
-        rowPosition = covTable.rowCount()
-        covTable.insertRow(rowPosition)
-        covTable.setItem(rowPosition , 0, PercentWidgetItem(entry['coverage']))
-        covTable.setItem(rowPosition , 1, QTableWidgetItem(entry['name']))
-        covTable.setItem(rowPosition , 2, HexWidgetItem(hexpad(entry['address'],8)))
-        covTable.setItem(rowPosition , 3, RatioWidgetItem(entry['ins_hits']))
-        covTable.setItem(rowPosition , 4, centered_text(entry['bbs_hits']))
+                inst_hits += bb['ninstr']
+                config['bb_hits'].add(bb['addr'])
+        entry[3] = str(inst_hits) + "/" + str(inst_count)
+        entry[4] = str(bbs_hits) + "/" + str(bbs_count)
+        entry[0] = str(round(inst_hits*100/inst_count,3)) + "%"
+        config['table'].append(entry)

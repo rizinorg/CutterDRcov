@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'ui/dock.ui',
 # licensing of 'ui/dock.ui' applies.
 #
-# Created: Sat Mar 23 21:50:52 2019
+# Created: Sun Mar 24 00:24:01 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -19,6 +19,7 @@ class Ui_DockWidget(object):
         self.gridLayout_5 = QtWidgets.QGridLayout(self.contents)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.stackedWidget = QtWidgets.QStackedWidget(self.contents)
+        self.stackedWidget.setAcceptDrops(False)
         self.stackedWidget.setObjectName("stackedWidget")
         self.LoaderPage = QtWidgets.QWidget()
         self.LoaderPage.setObjectName("LoaderPage")
@@ -26,6 +27,7 @@ class Ui_DockWidget(object):
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.loader = QtWidgets.QLabel(self.LoaderPage)
         self.loader.setCursor(QtCore.Qt.PointingHandCursor)
+        self.loader.setAcceptDrops(True)
         self.loader.setStyleSheet("")
         self.loader.setObjectName("loader")
         self.gridLayout_2.addWidget(self.loader, 0, 0, 1, 1)
@@ -90,7 +92,7 @@ class Ui_DockWidget(object):
         DockWidget.setWidget(self.contents)
 
         self.retranslateUi(DockWidget)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(DockWidget)
 
     def retranslateUi(self, DockWidget):
