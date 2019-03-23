@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icon/brush.svg</file>
+    <file>icon/reload.svg</file>
+    <file>icon/x.svg</file>
+    <file>icon/data-transfer-download.svg</file>
+  </qresource>
+</RCC>
