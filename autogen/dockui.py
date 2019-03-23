@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'ui/dock.ui',
 # licensing of 'ui/dock.ui' applies.
 #
-# Created: Sat Mar 23 16:12:58 2019
+# Created: Sat Mar 23 16:28:22 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -34,27 +34,27 @@ class Ui_DockWidget(object):
         self.CovTablePage.setObjectName("CovTablePage")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.CovTablePage)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.toolButton = QtWidgets.QToolButton(self.CovTablePage)
-        self.toolButton.setText("")
+        self.Close = QtWidgets.QToolButton(self.CovTablePage)
+        self.Close.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icon/x.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButton.setIcon(icon)
-        self.toolButton.setObjectName("toolButton")
-        self.gridLayout_3.addWidget(self.toolButton, 0, 0, 1, 1)
-        self.toolButton_2 = QtWidgets.QToolButton(self.CovTablePage)
-        self.toolButton_2.setText("")
+        self.Close.setIcon(icon)
+        self.Close.setObjectName("Close")
+        self.gridLayout_3.addWidget(self.Close, 0, 0, 1, 1)
+        self.Reload = QtWidgets.QToolButton(self.CovTablePage)
+        self.Reload.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/icon/reload.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButton_2.setIcon(icon1)
-        self.toolButton_2.setObjectName("toolButton_2")
-        self.gridLayout_3.addWidget(self.toolButton_2, 0, 1, 1, 1)
-        self.toolButton_3 = QtWidgets.QToolButton(self.CovTablePage)
-        self.toolButton_3.setText("")
+        self.Reload.setIcon(icon1)
+        self.Reload.setObjectName("Reload")
+        self.gridLayout_3.addWidget(self.Reload, 0, 1, 1, 1)
+        self.SelectColor = QtWidgets.QToolButton(self.CovTablePage)
+        self.SelectColor.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/icons/icon/brush.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButton_3.setIcon(icon2)
-        self.toolButton_3.setObjectName("toolButton_3")
-        self.gridLayout_3.addWidget(self.toolButton_3, 0, 2, 1, 1)
+        self.SelectColor.setIcon(icon2)
+        self.SelectColor.setObjectName("SelectColor")
+        self.gridLayout_3.addWidget(self.SelectColor, 0, 2, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(487, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem, 0, 3, 1, 1)
         self.CovTable = QtWidgets.QTableWidget(self.CovTablePage)
@@ -78,7 +78,7 @@ class Ui_DockWidget(object):
         DockWidget.setWidget(self.dockWidgetContents)
 
         self.retranslateUi(DockWidget)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(DockWidget)
 
     def retranslateUi(self, DockWidget):
