@@ -15,6 +15,10 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.loader.dropEvent = self.dropFile
         self.loader.mousePressEvent = self.openFile
         self.selectColor.clicked.connect(self.setColor)
+        self.close.clicked.connect(self.closeCallBack)
+    def closeCallBack(self):
+        self.config = {'color': 0x800000}
+        self.stackedWidget.setCurrentIndex(0)
     def loaderDragEnterEvent(self, e):
         if e.mimeData().hasUrls():
             self.loader.setCursor(QtCore.Qt.DragMoveCursor)
@@ -36,10 +40,11 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.stackedWidget.setCurrentIndex(1)
         analyse(self.config)
         self.display()
-
+        self.paint()
     def display(self):
         covTable = self.covTable
-        covTable.clear()
+        covTable.clearContents()
+        covTable.setRowCount(0);
         for entry in self.config['table']:
             rowPosition = covTable.rowCount()
             covTable.insertRow(rowPosition)
@@ -51,7 +56,10 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
 
     def setColor(self):
         self.config['color'] = QColorDialog.getColor().rgb()
+        self.paint()
 
+    def paint(self):
+        pass
 class CutterCovPlugin(cutter.CutterPlugin):
     name = "CutterCov"
     description = "Visualize DynamoRIOCov data into Cutter"
