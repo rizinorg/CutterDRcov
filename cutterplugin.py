@@ -1,7 +1,7 @@
 import cutter
 from PySide2.QtWidgets import QAction, QStackedWidget 
 #from PySide2.QtCore import QFile
-from cutterdrcov.autogen_ui import Ui_DockWidget
+from cutterdrcov.autogen import Ui_DockWidget
 #from PySide2 import QtUiTools
 
 class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):

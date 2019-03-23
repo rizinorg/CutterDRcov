@@ -15,10 +15,10 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="0" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="LoaderPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -40,59 +40,52 @@
       <widget class="QWidget" name="CovTablePage">
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
-         <widget class="QSplitter" name="splitter">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+         <widget class="QToolButton" name="Close">
+          <property name="text">
+           <string/>
           </property>
-          <widget class="QPushButton" name="Close">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../resources/icon.qrc">
-             <normaloff>:/icons/icon/x.svg</normaloff>:/icons/icon/x.svg</iconset>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="Reload">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../resources/icon.qrc">
-             <normaloff>:/icons/icon/reload.svg</normaloff>:/icons/icon/reload.svg</iconset>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="ChangeColor">
-           <property name="minimumSize">
-            <size>
-             <width>31</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>../resources/icon/brush.svg</normaloff>../resources/icon/brush.svg</iconset>
-           </property>
-          </widget>
+          <property name="icon">
+           <iconset resource="../resources/icon.qrc">
+            <normaloff>:/icons/icon/x.svg</normaloff>:/icons/icon/x.svg</iconset>
+          </property>
          </widget>
         </item>
         <item row="0" column="1">
+         <widget class="QToolButton" name="Reload">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../resources/icon.qrc">
+            <normaloff>:/icons/icon/reload.svg</normaloff>:/icons/icon/reload.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="SelectColor">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../resources/icon.qrc">
+            <normaloff>:/icons/icon/brush.svg</normaloff>:/icons/icon/brush.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>458</width>
+            <width>487</width>
             <height>20</height>
            </size>
           </property>
          </spacer>
         </item>
-        <item row="1" column="0" colspan="2">
+        <item row="1" column="0" colspan="4">
          <widget class="QTableWidget" name="CovTable">
           <attribute name="horizontalHeaderDefaultSectionSize">
            <number>118</number>
