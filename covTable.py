@@ -55,6 +55,8 @@ def analyse(config):
                 bbs_hits += 1
                 inst_hits += bb['ninstr']
                 config['bb_hits'].add(bb['addr'])
+        if bbs_hits == 0:
+            continue; # skip functions with zero coverage
         entry[3] = str(inst_hits) + "/" + str(inst_count)
         entry[4] = str(bbs_hits) + "/" + str(bbs_count)
         entry[0] = str(round(inst_hits*100/inst_count,3)) + "%"

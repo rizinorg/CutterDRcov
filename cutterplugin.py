@@ -44,7 +44,7 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
     def display(self):
         covTable = self.covTable
         covTable.clearContents()
-        covTable.setRowCount(0);
+        covTable.setRowCount(0)
         for entry in self.config['table']:
             rowPosition = covTable.rowCount()
             covTable.insertRow(rowPosition)
@@ -59,7 +59,10 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.paint()
 
     def paint(self):
-        pass
+        core = cutter.core()
+        highlighter = core.getBBHighlighter()
+        for bb in self.config['bb_hits']:
+            highlighter.highlight(bb, self.config['color'])
 class CutterCovPlugin(cutter.CutterPlugin):
     name = "CutterCov"
     description = "Visualize DynamoRIOCov data into Cutter"
