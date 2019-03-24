@@ -18,7 +18,14 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.selectColor.clicked.connect(self.setColor)
         self.close.clicked.connect(self.closeCallBack)
         self.reload.clicked.connect(self.reloadCallBack)
+        self.covTable.doubleClicked.connect(self.seek)
 
+    def seek(self, idx):
+        import pdb
+        pdb.set_trace()
+        row = idx.row()
+        addr = int(self.covTable.item(row, 2).text(),16)
+        cutter.core().seek(addr)
 
     def switchColorize(self):
         self.config['colorize'] = not self.config['colorize']
