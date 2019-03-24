@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'ui/dock.ui',
 # licensing of 'ui/dock.ui' applies.
 #
-# Created: Sun Mar 24 11:39:17 2019
+# Created: Sun Mar 24 11:47:44 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!

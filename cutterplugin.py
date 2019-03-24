@@ -17,16 +17,28 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.colorize.clicked.connect(self.switchColorize)
         self.selectColor.clicked.connect(self.setColor)
         self.close.clicked.connect(self.closeCallBack)
+        self.reload.clicked.connect(self.reloadCallBack)
+
+
     def switchColorize(self):
         self.config['colorize'] = not self.config['colorize']
         self.paint()
+
     def closeCallBack(self):
-        self.config['colorize'] = False;
+        self.config['colorize'] = False
         self.paint()
         self.newConfig()
         self.stackedWidget.setCurrentIndex(0)
+    def reloadCallBack(self):
+        self.config['colorize'] = False
+        self.paint()
+        analyse(self.config)
+        self.config['colorize'] = True
+        self.paint()
+
     def newConfig(self):
         self.config = {'color': 0x800000, 'colorize' : True}
+
     def loaderDragEnterEvent(self, e):
         if e.mimeData().hasUrls():
             self.loader.setCursor(QtCore.Qt.DragMoveCursor)
@@ -37,6 +49,7 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         files = e.mimeData().urls()
         fileName = files[0].toLocalFile()
         self.loadcov(fileName)
+
     def openFile(self, e):
         fileName = QFileDialog.getOpenFileName(self)
         self.loadcov(fileName[0])
@@ -49,6 +62,7 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         analyse(self.config)
         self.display()
         self.paint()
+
     def display(self):
         covTable = self.covTable
         covTable.clearContents()
