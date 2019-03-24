@@ -96,9 +96,12 @@
          </spacer>
         </item>
         <item row="0" column="2">
-         <widget class="QCheckBox" name="Colorize">
+         <widget class="QCheckBox" name="colorize">
           <property name="text">
            <string>Colorize (On / OFF)</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

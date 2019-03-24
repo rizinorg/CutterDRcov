@@ -8,14 +8,20 @@ from cutterdrcov.covTable import *
 class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
     def __init__(self, parent, action):
         super(MyDockWidget, self).__init__(parent, action)
-        self.config = {'color': 0x800000}
+        self.config = {'color': 0x800000, 'colorize' : True}
         self.setupUi(self)
         self.stackedWidget.setCurrentIndex(0)
         self.loader.dragEnterEvent = self.loaderDragEnterEvent
         self.loader.dropEvent = self.dropFile
         self.loader.mousePressEvent = self.openFile
+        self.colorize.clicked.connect(self.switchColorize)
         self.selectColor.clicked.connect(self.setColor)
+        import pdb
+        pdb.set_trace()
         self.close.clicked.connect(self.closeCallBack)
+    def switchColorize(self):
+        self.config['colorize'] = not self.config['colorize']
+        self.paint()
     def closeCallBack(self):
         self.config = {'color': 0x800000}
         self.stackedWidget.setCurrentIndex(0)
@@ -61,8 +67,13 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
     def paint(self):
         core = cutter.core()
         highlighter = core.getBBHighlighter()
-        for bb in self.config['bb_hits']:
-            highlighter.highlight(bb, self.config['color'])
+        if self.config['colorize']:
+            for bb in self.config['bb_hits']:
+                highlighter.highlight(bb, self.config['color'])
+        else:
+            for bb in self.config['bb_hits']:
+                highlighter.clear(bb)
+
 class CutterCovPlugin(cutter.CutterPlugin):
     name = "CutterCov"
     description = "Visualize DynamoRIOCov data into Cutter"
