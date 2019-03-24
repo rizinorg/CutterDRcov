@@ -1,10 +1,10 @@
 import cutter
 from PySide2 import QtCore
 from PySide2.QtWidgets import QAction, QFileDialog, QColorDialog
-from cutterDRcov.autogen import Ui_DockWidget
-from cutterDRcov.drcov import DCov_load
-from cutterDRcov.covTable import analyse
-from cutterDRcov.extras import *
+from .autogen import Ui_DockWidget
+from .drcov import DCov_load
+from .covTable import analyse
+from .extras import *
 
 class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
     def __init__(self, parent, action):

@@ -1,6 +1,6 @@
 import cutter
 from pathlib import Path
-from cutterDRcov.extras import hexPad
+from .extras import hexPad
 def getModuleIdx(modules, module):
     for i in range(len(modules)):
         if modules[i]['name'] == module:
