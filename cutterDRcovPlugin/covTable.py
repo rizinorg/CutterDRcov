@@ -8,7 +8,7 @@ def getModuleIdx(modules, module):
 
 
 
-def analyse_function(function, covbbs):
+def analyse_function(function, base, covbbs):
     entry = ["", function['name'], hexPad(function['offset'], 8) ,"" ,""]
     bbs = cutter.cmdj("afbj @" + function['name'])
     inst_count = 0
@@ -27,8 +27,9 @@ def analyse_function(function, covbbs):
         bbs_count += 1
         inst_count += bb['ninstr']
         dynamoRIOSize = 0
-        if bb['addr'] in covbbs:
-            dynamoRIOSize = covbbs[bb['addr']]
+        covbbaddr = bb['addr'] - base
+        if covbbaddr in covbbs:
+            dynamoRIOSize = covbbs[covbbaddr]
         if bb['addr'] in to_be_added:
             dynamoRIOSize = to_be_added[bb['addr']]
         if dynamoRIOSize == 0:
@@ -48,13 +49,15 @@ def analyse_function(function, covbbs):
 
 def analyse(config):
     functions = cutter.cmdj("aflj")
-    module = Path(cutter.cmdj("ij")['core']['file']).name
+    ij = cutter.cmdj("ij")
+    module = Path(ij['core']['file']).name
+    base = ij["bin"]["baddr"]
     idx = getModuleIdx(config['modules'], module)
     # [coverage, name, address, instruction hits, basic block hits]
     config['bb_hits'] = set()
     config['table'] = []
     for function in functions:
-        entry, hits = analyse_function(function, config['bbs'][idx])
+        entry, hits = analyse_function(function, base, config['bbs'][idx])
         if entry == None:
             continue
         config['table'].append(entry)
