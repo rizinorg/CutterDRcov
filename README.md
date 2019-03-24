@@ -8,7 +8,7 @@
 ## Introduction
 
 CutterDrcov is code coverage plugin that visualize DynamoRIO
-[drcov](http://dynamorio.org/docs/page_drcov.html) into [Cutter](cutter.re)
+[drcov](http://dynamorio.org/docs/page_drcov.html) into [Cutter](https://cutter.re)
 static analysis.
 
 IDA or Binary ninja user? checkout
