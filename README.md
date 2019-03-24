@@ -1,4 +1,4 @@
 # CutterDRcov
 
-![Screenshot][screanshots/overview.jpg?raw=true]
+![Screenshot](screanshots/overview.jpg?raw=true)
 
