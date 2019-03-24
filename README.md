@@ -2,6 +2,9 @@
 
 ![Screenshot](screanshots/overview.jpg?raw=true)
 
+[![Build Status](https://travis-ci.org/oddcoder/CutterDRcov.svg?branch=master)](https://travis-ci.org/oddcoder/CutterDRcov)
+[![codecov](https://codecov.io/gh/oddcoder/CutterDRcov/branch/master/graph/badge.svg)](https://codecov.io/gh/oddcoder/CutterDRcov)
+
 ## Introduction
 
 CutterDrcov is code coverage plugin that visualize DynamoRIO
