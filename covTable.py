@@ -68,8 +68,6 @@ def analyse(config):
             bbs_hits += 1
             inst_hits += bb['ninstr']
             config['bb_hits'].add(bb['addr'])
-            import pdb
-            #pdb.set_trace()
             r2Size = bb['size']
             if dynamoRIOSize > r2Size:
                 to_be_added[bb['addr'] + r2Size] = dynamoRIOSize - r2Size 

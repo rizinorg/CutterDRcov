@@ -8,7 +8,7 @@ from cutterdrcov.covTable import *
 class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
     def __init__(self, parent, action):
         super(MyDockWidget, self).__init__(parent, action)
-        self.config = {'color': 0x800000, 'colorize' : True}
+        self.newConfig()
         self.setupUi(self)
         self.stackedWidget.setCurrentIndex(0)
         self.loader.dragEnterEvent = self.loaderDragEnterEvent
@@ -16,15 +16,17 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.loader.mousePressEvent = self.openFile
         self.colorize.clicked.connect(self.switchColorize)
         self.selectColor.clicked.connect(self.setColor)
-        import pdb
-        pdb.set_trace()
         self.close.clicked.connect(self.closeCallBack)
     def switchColorize(self):
         self.config['colorize'] = not self.config['colorize']
         self.paint()
     def closeCallBack(self):
-        self.config = {'color': 0x800000}
+        self.config['colorize'] = False;
+        self.paint()
+        self.newConfig()
         self.stackedWidget.setCurrentIndex(0)
+    def newConfig(self):
+        self.config = {'color': 0x800000, 'colorize' : True}
     def loaderDragEnterEvent(self, e):
         if e.mimeData().hasUrls():
             self.loader.setCursor(QtCore.Qt.DragMoveCursor)
