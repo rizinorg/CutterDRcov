@@ -1,7 +1,6 @@
 import re
-from pathlib import Path
 import struct
-
+from .extras import file_name
 
 MIN_DRCOV_FILE_SIZE = 20
 DRCOV_VERSION = 2
@@ -52,9 +51,9 @@ def parse_module_entry(f, version):
     #XXX now put commas and spaces in the file path and this gets fucked up
     entry = re.split(",\s+", entry)
     if version == 2:
-        return {"start": int(entry[1], 16), "name": Path(entry[-1]).name}
+        return {"start": int(entry[1], 16), "name": file_name(entry[-1])}
     else:
-        return {"start": int(entry[2], 16), "name": Path(entry[-1]).name}
+        return {"start": int(entry[2], 16), "name": file_name(entry[-1])}
         
 def read_module_list(f):
     modules = []    
@@ -79,6 +78,11 @@ def read_bb_list(f, module_count):
         # size of struct is 64 bit
         bb = f.read(8)
         offset, size, mod_num = struct_unpack(bb)
+        if mod_num > module_count:
+            # we have a case where dynamocov failed to capture which modules
+            # does this basic block belongs to
+            print("Warning: we have unknown module number:", mod_num)
+            continue
         bblist[mod_num][offset] = size
     return bblist
 
