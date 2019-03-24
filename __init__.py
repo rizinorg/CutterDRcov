@@ -1,1 +1,1 @@
-from cutterdrcov.cutterplugin import create_cutter_plugin
+from cutterDRcov.cutterplugin import create_cutter_plugin
