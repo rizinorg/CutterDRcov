@@ -13,9 +13,10 @@ IDA or Binary ninja user? checkout
 
 ## Installation
 First, locate the folder used by cutter for loading plugins, you can find it
-from inside cutter by going to *Edit menu* -> *preferences* and finally
+from inside cutter by going to *Edit menu* → *preferences* and finally
 selecting *Plugins*.
 ![pathlocation](screanshots/path.jpg?raw=true)
+
 Inside that folder you will want to go *python* folder,
 [download](https://github.com/oddcoder/CutterDRcov/archive/master.zip) this
 repository, and move *cutterDRcovPlugin* folder there.
