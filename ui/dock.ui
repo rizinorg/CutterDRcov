@@ -21,7 +21,7 @@
        <bool>false</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="LoaderPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -95,7 +95,14 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0" colspan="2">
+        <item row="0" column="2">
+         <widget class="QCheckBox" name="Colorize">
+          <property name="text">
+           <string>Colorize (On / OFF)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
          <widget class="QTableWidget" name="covTable">
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>

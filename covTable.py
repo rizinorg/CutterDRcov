@@ -48,13 +48,31 @@ def analyse(config):
         inst_hits = 0
         bbs_count = 0
         bbs_hits = 0
+        to_be_added = {}
         for bb in bbs:
+            # radare2's basic block can't have jump inside it while that is
+            # possible in DynamoRIO, for this reason we first need to check
+            # if the size of the 2 basic block matches, if radare2's basic block
+            # size is smaller thant we would add the next block untill the sizes
+            # match. If dynamoRIO size is smaller then something is wrong with
+            # r2 analysis or dynamoRIO coverage.
             bbs_count += 1
             inst_count += bb['ninstr']
+            dynamoRIOSize = 0
             if bb['addr'] in config['bbs'][idx]:
-                bbs_hits += 1
-                inst_hits += bb['ninstr']
-                config['bb_hits'].add(bb['addr'])
+                dynamoRIOSize = config['bbs'][idx][bb['addr']]
+            if bb['addr'] in to_be_added:
+                dynamoRIOSize = to_be_added[bb['addr']]
+            if dynamoRIOSize == 0:
+                continue
+            bbs_hits += 1
+            inst_hits += bb['ninstr']
+            config['bb_hits'].add(bb['addr'])
+            import pdb
+            #pdb.set_trace()
+            r2Size = bb['size']
+            if dynamoRIOSize > r2Size:
+                to_be_added[bb['addr'] + r2Size] = dynamoRIOSize - r2Size 
         if bbs_hits == 0:
             continue; # skip functions with zero coverage
         entry[3] = str(inst_hits) + "/" + str(inst_count)

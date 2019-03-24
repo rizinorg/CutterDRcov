@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'ui/dock.ui',
 # licensing of 'ui/dock.ui' applies.
 #
-# Created: Sun Mar 24 00:24:01 2019
+# Created: Sun Mar 24 02:34:04 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -62,6 +62,9 @@ class Ui_DockWidget(object):
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(540, 38, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
+        self.Colorize = QtWidgets.QCheckBox(self.CovTablePage)
+        self.Colorize.setObjectName("Colorize")
+        self.gridLayout.addWidget(self.Colorize, 0, 2, 1, 1)
         self.covTable = QtWidgets.QTableWidget(self.CovTablePage)
         self.covTable.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.covTable.setFrameShadow(QtWidgets.QFrame.Plain)
@@ -86,18 +89,19 @@ class Ui_DockWidget(object):
         self.covTable.horizontalHeader().setDefaultSectionSize(118)
         self.covTable.horizontalHeader().setStretchLastSection(True)
         self.covTable.verticalHeader().setVisible(False)
-        self.gridLayout.addWidget(self.covTable, 1, 0, 1, 2)
+        self.gridLayout.addWidget(self.covTable, 1, 0, 1, 3)
         self.stackedWidget.addWidget(self.CovTablePage)
         self.gridLayout_5.addWidget(self.stackedWidget, 0, 0, 1, 1)
         DockWidget.setWidget(self.contents)
 
         self.retranslateUi(DockWidget)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(DockWidget)
 
     def retranslateUi(self, DockWidget):
         DockWidget.setWindowTitle(QtWidgets.QApplication.translate("DockWidget", "Cutter DynamoRIO Coverage", None, -1))
         self.loader.setText(QtWidgets.QApplication.translate("DockWidget", "<html><head/><body><p align=\"center\"><img src=\":/icons/icon/data-transfer-download.svg\"/></p><p align=\"center\">Click to <span style=\" font-weight:600;\">Open drcov file</span> or drag it here.</p></body></html>", None, -1))
+        self.Colorize.setText(QtWidgets.QApplication.translate("DockWidget", "Colorize (On / OFF)", None, -1))
         self.covTable.setSortingEnabled(True)
         self.covTable.horizontalHeaderItem(0).setText(QtWidgets.QApplication.translate("DockWidget", "Coverage", None, -1))
         self.covTable.horizontalHeaderItem(1).setText(QtWidgets.QApplication.translate("DockWidget", "Function Name", None, -1))
