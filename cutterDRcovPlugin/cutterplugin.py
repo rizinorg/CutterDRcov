@@ -2,7 +2,7 @@ import cutter
 from PySide2 import QtCore
 from PySide2.QtWidgets import QAction, QFileDialog, QColorDialog
 from .autogen import Ui_DockWidget
-from .drcov import DCov_load
+from . import drcov
 from .covTable import analyse
 from .extras import *
 
@@ -64,7 +64,7 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
 
     def loadcov(self, file_name):
         try:
-            modules, bbs = DCov_load(file_name)
+            modules, bbs = drcov.load(file_name)
         except:
             self.parent().messageBoxWarning("", "Invalid Coverage File")
             return

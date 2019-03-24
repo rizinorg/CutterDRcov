@@ -86,7 +86,7 @@ def read_bb_list(f, module_count):
         bblist[mod_num][offset] = size
     return bblist
 
-def DCov_dead_module_elimination(modules, bbs):
+def dead_module_elimination(modules, bbs):
     delete = []
     for i in range(len(bbs)):
         if len(bbs[i]) == 0:
@@ -94,10 +94,10 @@ def DCov_dead_module_elimination(modules, bbs):
     for i in delete:
         del bbs[i]
         del modules[i]
-def DCov_load(file_name):
+def load(file_name):
     f = open_file(file_name)
     modules = read_module_list(f)
     bbs = read_bb_list(f, len(modules))
     f.close()
-    DCov_dead_module_elimination(modules, bbs)
+    dead_module_elimination(modules, bbs)
     return [modules, bbs]
