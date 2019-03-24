@@ -21,8 +21,6 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.covTable.doubleClicked.connect(self.seek)
 
     def seek(self, idx):
-        import pdb
-        pdb.set_trace()
         row = idx.row()
         addr = int(self.covTable.item(row, 2).text(),16)
         cutter.core().seek(addr)
@@ -59,10 +57,16 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
 
     def openFile(self, e):
         fileName = QFileDialog.getOpenFileName(self)
+        if len(fileName[0]) == 0:
+            return
         self.loadcov(fileName[0])
 
     def loadcov(self, file_name):
-        modules, bbs = DCov_load(file_name)
+        try:
+            modules, bbs = DCov_load(file_name)
+        except:
+            self.parent().messageBoxWarning("", "Invalid Coverage File")
+            return
         self.config['modules'] = modules
         self.config['bbs'] = bbs
         self.stackedWidget.setCurrentIndex(1)
