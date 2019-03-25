@@ -3,8 +3,6 @@ import sys
 sys.path.append(".")
 from cutterDRcovPlugin import drcov
 
-#class drcovTest(unittest.TestCase):
-#    def 
 class TestDRcov(unittest.TestCase):
 
     def test_get_file_size(self):
