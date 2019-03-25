@@ -5,6 +5,7 @@ from .autogen import Ui_DockWidget
 from . import drcov
 from .covTable import analyse
 from .extras import *
+from .sortableTableItem import *
 
 class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
     def __init__(self, parent, action):
