@@ -8,7 +8,7 @@ from cutterDRcovPlugin import drcov
 class TestDRcov(unittest.TestCase):
 
     def test_get_file_size(self):
-        f = open("test_files/drcov1.log", "r")
+        f = open("test_files/drcov2.4.log", "r")
         size = drcov.get_file_size(f)
         f.close()
         self.assertEqual(size, 851)
@@ -30,14 +30,14 @@ class TestDRcov(unittest.TestCase):
         # Module Table: version 4
         # dynamoRIO 7.1.0-1 linux 32
         # test1.asm
-        self.verify_test1_asm("test_files/drcov1.log")
+        self.verify_test1_asm("test_files/drcov2.4.log")
 
     def test_drcov_2_2_linux(self):
         # DRCOV VERSION: 2
         # Module Table: version 2
         #dynamoRIO 7.0.0-RC1 linux 32
         # test1.asm
-        self.verify_test1_asm("test_files/drcov2.log")
+        self.verify_test1_asm("test_files/drcov2.2.log")
 
 if __name__ == '__main__':
     unittest.main()
