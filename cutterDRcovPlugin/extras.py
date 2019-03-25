@@ -29,7 +29,7 @@ def hexPad(num, pad):
 
 # https://stackoverflow.com/questions/8384737/extract-file-name-from-path-no-matter-what-the-os-path-format
 # cuz windows sucks :( .. hard
-def file_name(path):
+def fileName(path):
    # There's one caveat: Linux filenames may contain backslashes. So on linux,
     # r'a/b\c' always refers to the file b\c in the a folder, while on Windows,
     # it always refers to the c file in the b subfolder of the a folder. So when

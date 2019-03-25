@@ -1,5 +1,5 @@
 import cutter
-from .extras import hexPad, file_name
+from .extras import hexPad, fileName
 def getModuleIdx(modules, module):
     for i in range(len(modules)):
         if modules[i]['name'] == module:
@@ -49,7 +49,7 @@ def analyse_function(function, base, covbbs):
 def analyse(config):
     functions = cutter.cmdj("aflj")
     ij = cutter.cmdj("ij")
-    module = file_name(ij['core']['file'])
+    module = fileName(ij['core']['file'])
     base = ij["bin"]["baddr"]
     idx = getModuleIdx(config['modules'], module)
     # [coverage, name, address, instruction hits, basic block hits]

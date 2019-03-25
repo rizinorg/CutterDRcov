@@ -62,9 +62,9 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
             return
         self.loadcov(fileName[0])
 
-    def loadcov(self, file_name):
+    def loadcov(self, fileName):
         try:
-            modules, bbs = drcov.load(file_name)
+            modules, bbs = drcov.load(fileName)
         except:
             self.parent().messageBoxWarning("", "Invalid Coverage File")
             return

@@ -1,6 +1,6 @@
 import re
 import struct
-from .extras import file_name
+from .extras import fileName
 
 MIN_DRCOV_FILE_SIZE = 20
 DRCOV_VERSION = 2
@@ -23,8 +23,8 @@ def get_file_size(f):
     f.seek(0,0)
     return file_size
 
-def open_file(file_name):
-    f = open(file_name, "rb")
+def open_file(fileName):
+    f = open(fileName, "rb")
     file_size = get_file_size(f)
     if file_size <= MIN_DRCOV_FILE_SIZE:
         raise InvalidDRCovFile
@@ -51,9 +51,9 @@ def parse_module_entry(f, version):
     #XXX now put commas and spaces in the file path and this gets fucked up
     entry = re.split(",\s+", entry)
     if version == 2:
-        return {"start": int(entry[1], 16), "name": file_name(entry[-1])}
+        return {"start": int(entry[1], 16), "name": fileName(entry[-1])}
     else:
-        return {"start": int(entry[2], 16), "name": file_name(entry[-1])}
+        return {"start": int(entry[2], 16), "name": fileName(entry[-1])}
         
 def read_module_list(f):
     modules = []    
@@ -94,8 +94,8 @@ def dead_module_elimination(modules, bbs):
     for i in delete:
         del bbs[i]
         del modules[i]
-def load(file_name):
-    f = open_file(file_name)
+def load(fileName):
+    f = open_file(fileName)
     modules = read_module_list(f)
     bbs = read_bb_list(f, len(modules))
     f.close()
