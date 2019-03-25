@@ -44,5 +44,13 @@ class TestDRcov(unittest.TestCase):
         # test1.asm
         self.verify_test1_asm("test_files/drcov2.2.log")
 
+    def test_drcov_orphan(self):
+        # Some times a block structure will reference module with
+        # numbers that wasn't previously declared typically 0xffff
+        # I don't know what would cause this to happen, but I have
+        # seen it inside some complex application. I couldn't write
+        # code that would trigger this behavior so instead I wrote a
+        # test drcov file that would have this trait.
+        self.verify_test1_asm("test_files/drcov_orphan.log")
 if __name__ == '__main__':
     unittest.main()
