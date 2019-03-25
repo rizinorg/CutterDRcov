@@ -30,6 +30,13 @@ class TestDRcov(unittest.TestCase):
         # test1.asm
         self.verify_test1_asm("test_files/drcov2.4.log")
 
+    def test_drcov_2_3_linux(self):
+        # DRCOV VERSION: 2
+        # Module Table: version 3
+        # dynamoRIO 7.0.17595-0 linux 32
+        # test1.asm
+        self.verify_test1_asm("test_files/drcov2.3.log")
+
     def test_drcov_2_2_linux(self):
         # DRCOV VERSION: 2
         # Module Table: version 2
