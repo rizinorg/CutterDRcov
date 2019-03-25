@@ -9,8 +9,8 @@ from .extras import *
 class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
     def __init__(self, parent, action):
         super(MyDockWidget, self).__init__(parent, action)
-        self.newConfig()
         self.setupUi(self)
+        self.newConfig()
         self.stackedWidget.setCurrentIndex(0)
         self.loader.dragEnterEvent = self.loaderDragEnterEvent
         self.loader.dropEvent = self.dropFile
@@ -31,19 +31,19 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.paint()
 
     def closeCallBack(self):
-        self.config['colorize'] = False
-        self.paint()
+        self.clearHighlight()
         self.newConfig()
         self.stackedWidget.setCurrentIndex(0)
     def reloadCallBack(self):
-        self.config['colorize'] = False
-        self.paint()
+        self.clearHighlight()
         analyse(self.config)
-        self.config['colorize'] = True
         self.paint()
 
     def newConfig(self):
-        self.config = {'color': 0x800000, 'colorize' : True}
+        self.config = {
+                'color': 0x800000,
+                'colorize' : self.colorize.isChecked()
+                }
 
     def loaderDragEnterEvent(self, e):
         if e.mimeData().hasUrls():
@@ -93,14 +93,21 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         self.paint()
 
     def paint(self):
+        if self.config['colorize']:
+            self.highlight()
+        else:
+            self.clearHighlight()
+
+    def highlight(self):
         core = cutter.core()
         highlighter = core.getBBHighlighter()
-        if self.config['colorize']:
-            for bb in self.config['bb_hits']:
-                highlighter.highlight(bb, self.config['color'])
-        else:
-            for bb in self.config['bb_hits']:
-                highlighter.clear(bb)
+        for bb in self.config['bb_hits']:
+            highlighter.highlight(bb, self.config['color'])
+    def clearHighlight(self):
+        core = cutter.core()
+        highlighter = core.getBBHighlighter()
+        for bb in self.config['bb_hits']:
+            highlighter.clear(bb)
 
 class CutterCovPlugin(cutter.CutterPlugin):
     name = "CutterCov"
