@@ -81,7 +81,7 @@ def read_bb_list(f, module_count):
         if mod_num > module_count:
             # we have a case where dynamocov failed to capture which modules
             # does this basic block belongs to
-            print("Warning: we have unknown module number:", mod_num)
+            # print("Warning: we have unknown module number:", mod_num)
             continue
         bblist[mod_num][offset] = size
     return bblist
