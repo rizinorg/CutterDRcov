@@ -8,28 +8,10 @@ DRCOV_VERSION = 2
 DRCOV_HEADER_RE = "DRCOV VERSION: (?P<version>\d+)\n"
 MODULE_HEADER_V2_RE = "Module Table: version (?P<version>\d+), count (?P<mod_num>\d+)\n"
 BB_HEADER_RE = "BB Table: (?P<bbcount>\d+) bbs\n"
-class InvalidDRCovFile(Exception):
-    pass
 
 class DRCovVersionMisMatch(Exception):
     pass
 
-def get_file_size(f):
-    """
-        f: file
-    """
-    f.seek(0,2)
-    file_size = f.tell()
-    f.seek(0,0)
-    return file_size
-
-def open_file(fileName):
-    f = open(fileName, "rb")
-    file_size = get_file_size(f)
-    if file_size <= MIN_DRCOV_FILE_SIZE:
-        raise InvalidDRCovFile
-    return f
-    
 def check_module_header(f):
     header = f.readline().decode('utf-8')
     pattern = re.match(DRCOV_HEADER_RE, header)
@@ -95,7 +77,7 @@ def dead_module_elimination(modules, bbs):
         del bbs[i]
         del modules[i]
 def load(fileName):
-    f = open_file(fileName)
+    f = open(fileName, "rb")
     modules = read_module_list(f)
     bbs = read_bb_list(f, len(modules))
     f.close()

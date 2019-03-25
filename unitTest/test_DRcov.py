@@ -5,12 +5,6 @@ from cutterDRcovPlugin import drcov
 
 class TestDRcov(unittest.TestCase):
 
-    def test_get_file_size(self):
-        f = open("test_files/drcov2.4.log", "r")
-        size = drcov.get_file_size(f)
-        f.close()
-        self.assertEqual(size, 851)
-
     def verify_test1_asm(self, covfile):
         modules, bbs = drcov.load(covfile)
         self.assertEqual(len(modules), 1)
