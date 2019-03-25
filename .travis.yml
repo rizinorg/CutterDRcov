@@ -4,6 +4,6 @@ python:
 install:
         pip install Pyside2 codecov
 script:
-        coverage run unitTest/test_DRcov.py
+        coverage run unitTest
 after_success:
   - codecov
