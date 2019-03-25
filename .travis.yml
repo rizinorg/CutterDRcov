@@ -4,6 +4,6 @@ python:
 install:
         pip install Pyside2 codecov
 script:
-        coverage run unitTest
+        coverage run -m unittest discover unitTest
 after_success:
   - codecov
