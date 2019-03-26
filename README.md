@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/oddcoder/CutterDRcov.svg?branch=master)](https://travis-ci.org/oddcoder/CutterDRcov)
 [![codecov](https://codecov.io/gh/oddcoder/CutterDRcov/branch/master/graph/badge.svg)](https://codecov.io/gh/oddcoder/CutterDRcov)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## Introduction
 
