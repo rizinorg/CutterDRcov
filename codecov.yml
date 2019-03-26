@@ -1,0 +1,3 @@
+ignore:
+        - "unittest"
+        - "cutterdrcov_plugin/autogen"
