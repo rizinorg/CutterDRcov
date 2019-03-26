@@ -8,7 +8,7 @@ class FakeCutter():
         return ""
 
 sys.modules['cutter'] = FakeCutter()
-def analyse_function_cmdj(cmd):
+def test_1_cmdj(cmd):
     if cmd == "ij":
         return {
             'core': {'file': 'test1.bin'},
@@ -31,7 +31,8 @@ from cutterdrcov_plugin import covtable, drcov
 
 
 class TestcovTable(unittest.TestCase):
-    @patch("cutter.cmdj", side_effect=analyse_function_cmdj)
+
+    @patch("cutter.cmdj", side_effect=test_1_cmdj)
     def test_analyse_function(self, _):
         # Here, checking if cutter works as expected is out of scope but rather
         # what I am checking is given that cutter works as expected does my code
@@ -40,7 +41,21 @@ class TestcovTable(unittest.TestCase):
         function = cutter.cmdj("aflj")[0]
         base = cutter.cmdj("ij")['bin']['baddr']
         entry, hits = covtable.analyse_function(function, base, bbs[0])
-        self.assertEqual(entry, ['76.923%', 'entry0', '0x08048060', '10/13', '3/4'])
+        hardcoded_entry = ['76.923%', 'entry0', '0x08048060', '10/13', '3/4']
+        self.assertEqual(entry, hardcoded_entry)
         self.assertEqual(hits, {0x8048060, 0x804808a, 0x8048074})
+
+    @patch("cutter.cmdj", side_effect=test_1_cmdj)
+    def test_analyse(self, _):
+        modules, bbs = drcov.load("test_files/drcov2.4.log")
+        config = {}
+        config['modules'] = modules
+        config['bbs'] = bbs
+        covtable.analyse(config)
+        table = [['76.923%', 'entry0', '0x08048060', '10/13', '3/4']]
+        hits = {0x8048060, 0x804808a, 0x8048074}
+        self.assertEqual(config['table'], table)
+        self.assertEqual(config['bb_hits'], hits)
+
 if __name__ == '__main__':
     unittest.main()
