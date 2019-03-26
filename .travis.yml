@@ -4,8 +4,6 @@ python:
 install:
         pip install Pyside2 codecov pylint
 script:
-        - pylint cutterDRcovPlugin
-        - pylint --disable=C0413,C0111,R0201,R0903,E0401 unitTest
-        - coverage run -m unittest discover unitTest
+        ./scripts/travis.sh
 after_success:
   - codecov
