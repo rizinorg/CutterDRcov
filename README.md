@@ -22,7 +22,7 @@ selecting *Plugins*.
 
 Inside that folder you will want to go *python* folder,
 [download](https://github.com/oddcoder/CutterDRcov/archive/master.zip) this
-repository, and move *cutterDRcovPlugin* folder there.
+repository, and move *cutterdrcov_plugin* folder there.
 
 ## Usage
 
