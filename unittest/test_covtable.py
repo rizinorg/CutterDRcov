@@ -8,6 +8,10 @@ class FakeCutter():
         return ""
 
 sys.modules['cutter'] = FakeCutter()
+
+import cutter
+from cutterdrcov_plugin import covtable, drcov
+
 def test_1_cmdj(cmd):
     if cmd == "ij":
         return {
@@ -49,10 +53,6 @@ def test_2_cmdj(cmd):
         ]
     return None
 
-
-
-import cutter
-from cutterdrcov_plugin import covtable, drcov
 
 
 class TestcovTable(unittest.TestCase):
