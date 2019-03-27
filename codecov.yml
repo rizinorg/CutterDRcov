@@ -1,3 +1,5 @@
 ignore:
         - "unittest"
         - "cutterdrcov_plugin/autogen"
+        - "cutterdrcov_plugin/plugin_interface.py"
+        - "cutterdrcov_plugin/cutterplugin.py"
