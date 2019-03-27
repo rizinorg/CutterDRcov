@@ -98,5 +98,13 @@ class TestcovTable(unittest.TestCase):
         hits = {0x0804806a, 0x0804807e, 0x08048094}
         self.do_analyse(modules, bbs, table, hits)
 
+    @patch("cutter.cmdj", side_effect=test_1_cmdj)
+    def test_bad_analysis(self, _):
+        """
+        I found this by mistake, it triggered exception while it shouldn't
+        """
+        modules, bbs = drcov.load("test_files/drcov.test2.log")
+        self.do_analyse(modules, bbs, [], set())
+
 if __name__ == '__main__':
     unittest.main()

@@ -4,7 +4,7 @@ def get_module_idx(modules, module):
     for i in range(len(modules)):
         if modules[i]['name'] == module:
             return i
-    return None
+    return -1
 
 
 
@@ -48,14 +48,16 @@ def analyse_function(function, base, covbbs):
     return (entry, hit_set)
 
 def analyse(config):
+    config['bb_hits'] = set()
+    config['table'] = []
     functions = cutter.cmdj("aflj")
     info = cutter.cmdj("ij")
     module = file_name(info['core']['file'])
     base = info["bin"]["baddr"]
     idx = get_module_idx(config['modules'], module)
+    if idx == -1:
+        return
     # [coverage, name, address, instruction hits, basic block hits]
-    config['bb_hits'] = set()
-    config['table'] = []
     for function in functions:
         entry, hits = analyse_function(function, base, config['bbs'][idx])
         if entry is None:
