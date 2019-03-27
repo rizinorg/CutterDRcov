@@ -53,6 +53,27 @@ def test_2_cmdj(cmd):
         ]
     return None
 
+def test_3_cmdj(cmd):
+    if cmd == "ij":
+        return {
+            "core": {"file": "/some/crazy/path/test3.bin",},
+            "bin":{"baddr": 0x8048000}
+        }
+    if cmd == "aflj":
+        return [{"offset": 0x8048060, "name": "entry0"}]
+    if cmd == "afbj @entry0":
+        return [
+            {"addr":134512736, "size":20, "ninstr":5},
+            {"addr":134512756, "size":5, "ninstr":2},
+            {"addr":134512761, "size":5, "ninstr":2},
+            {"addr":134512766, "size":5, "ninstr":2},
+            {"addr":134512771, "size":15, "ninstr":3},
+            {"addr":134512786, "size":15, "ninstr":3},
+            {"addr":134512801, "size":15, "ninstr":3},
+            {"addr":134512816, "size":12, "ninstr":3}
+        ]
+    return None
+
 
 
 class TestcovTable(unittest.TestCase):
@@ -92,10 +113,21 @@ class TestcovTable(unittest.TestCase):
         so they needed be reported
         """
         modules, bbs = drcov.load("test_files/drcov.test2.log")
-        # technically speaking only 10 instructions can get executed but what
-        # can I do ... any way it wouldn't matter
+        # technically speaking only 10 instructions can get executed
+        # but what can I do ... any way it wouldn't matter
         table = [["78.571%", "entry0", "0x0804806a", "11/14", "3/4"]]
         hits = {0x0804806a, 0x0804807e, 0x08048094}
+        self.do_analyse(modules, bbs, table, hits)
+
+    @patch("cutter.cmdj", side_effect=test_3_cmdj)
+    def test_analyse3(self, _):
+        """
+        This tests the case when dynamoRIO block is equivalent to more
+        than one radare2 block
+        """
+        modules, bbs = drcov.load("test_files/drcov.test3.log")
+        table = [["73.913%", "entry0", "0x08048060", "17/23", "5/8"]]
+        hits = {0x08048060, 0x08048083, 0x08048092, 0x080480a1, 0x080480b0}
         self.do_analyse(modules, bbs, table, hits)
 
     @patch("cutter.cmdj", side_effect=test_1_cmdj)
