@@ -1,4 +1,5 @@
 from PySide2 import QtCore
+from PySide2.QtGui import QColor
 from PySide2.QtWidgets import QFileDialog, QColorDialog
 import cutter
 from .autogen import Ui_DockWidget
@@ -97,7 +98,10 @@ class MyDockWidget(cutter.CutterDockWidget, Ui_DockWidget):
         This function changes color of drcoved bbs and reflects
         the change to gui.
         """
-        self.config['color'] = QColorDialog.getColor().rgb()
+        new_color = QColorDialog.getColor(QColor(self.config['color']))
+        if not new_color.isValid():
+            return
+        self.config['color'] = new_color.rgb()
         self.paint()
 
     def paint(self):
