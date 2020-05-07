@@ -75,7 +75,53 @@ def dead_module_elimination(modules, bbs):
     for i in delete:
         del bbs[i]
         del modules[i]
+
+
+def process_set_of_files(path):
+    OP_INTERSECTION = 'intersect'
+    OP_DIFFERENCE = 'subtract'
+    OP_UNION = 'union'
+    supported_operations = {OP_INTERSECTION, OP_DIFFERENCE, OP_UNION}
+    with open(path, "r") as f:
+        all_lines = [l.rstrip(' \t\n\r') for l in f.readlines()]
+        lines = [l for l in all_lines if len(l)]
+    operation = lines[0]
+    if operation not in supported_operations:
+        raise Exception('Unsupported operation')
+    lines = lines[1:]
+    if len(lines) == 1:
+        return load(lines[0])
+    files = [load(l) for l in lines]
+    mod_list = files[0][0]
+    mod_names = [ m['name'] for m in mod_list ]
+    if any([m['name'] for m in f[0]] != mod_names for f in files[1:]):
+        raise Exception('Module lists differ among coverage files')
+    bbs = []
+    for m in range(len(mod_list)):
+        dicts = [f[1][m] for f in files]
+        res_dict = {}
+        bbs.append(res_dict)
+        if operation == OP_UNION:
+            for d in dicts:
+                res_dict.update(d)
+        else:
+            first_dict = dicts[0]
+            other_dicts = dicts[1:]
+            for bb, size in first_dict.items():
+                if operation == OP_INTERSECTION:
+                    to_add = all(bb in d for d in other_dicts)
+                elif operation == OP_DIFFERENCE:
+                    to_add = all(bb not in d for d in other_dicts)
+                else:
+                    assert False
+                if to_add:
+                    res_dict[bb] = size
+    return [mod_list, bbs]
+
+
 def load(path):
+    if path.endswith(".set"):
+        return process_set_of_files(path)
     drcov_file = open(path, "rb")
     modules = read_module_list(drcov_file)
     bbs = read_bb_list(drcov_file, len(modules))
