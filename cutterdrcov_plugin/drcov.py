@@ -75,7 +75,65 @@ def dead_module_elimination(modules, bbs):
     for i in delete:
         del bbs[i]
         del modules[i]
+
+
+def intersect_bbs(bbs):
+    result = {}
+    first_dict = bbs[0]
+    other_dicts = bbs[1:]
+    for bb, size in first_dict.items():
+        if all(bb in d for d in other_dicts):
+            result[bb] = size
+    return result
+
+
+def union_bbs(bbs):
+    result = {}
+    for d in bbs:
+        result.update(d)
+    return result
+
+
+def subtract_bbs(bbs):
+    result = {}
+    first_dict = bbs[0]
+    other_dicts = bbs[1:]
+    for bb, size in first_dict.items():
+        if all(bb not in d for d in other_dicts):
+            result[bb] = size
+    return result
+
+
+def process_set_of_files(path):
+    supported_operations = {
+        'intersect': intersect_bbs,
+        'subtract': subtract_bbs,
+        'union': union_bbs
+    }
+    with open(path, "r") as f:
+        all_lines = [l.rstrip(' \t\n\r') for l in f.readlines()]
+        lines = [l for l in all_lines if len(l)]
+    op = supported_operations.get(lines[0])
+    if not op:
+        raise Exception('Unsupported operation')
+    lines = lines[1:]
+    if len(lines) == 1:
+        return load(lines[0])
+    files = [load(l) for l in lines]
+    mod_list = files[0][0]
+    mod_names = [ m['name'] for m in mod_list ]
+    if any([m['name'] for m in f[0]] != mod_names for f in files[1:]):
+        raise Exception('Module lists differ among coverage files')
+    bbs = []
+    for m in range(len(mod_list)):
+        dicts = [f[1][m] for f in files]
+        bbs.append(op(dicts))
+    return [mod_list, bbs]
+
+
 def load(path):
+    if path.endswith(".set"):
+        return process_set_of_files(path)
     drcov_file = open(path, "rb")
     modules = read_module_list(drcov_file)
     bbs = read_bb_list(drcov_file, len(modules))
