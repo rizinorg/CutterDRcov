@@ -77,16 +77,44 @@ def dead_module_elimination(modules, bbs):
         del modules[i]
 
 
+def intersect_bbs(bbs):
+    result = {}
+    first_dict = bbs[0]
+    other_dicts = bbs[1:]
+    for bb, size in first_dict.items():
+        if all(bb in d for d in other_dicts):
+            result[bb] = size
+    return result
+
+
+def union_bbs(bbs):
+    result = {}
+    for d in bbs:
+        result.update(d)
+    return result
+
+
+def subtract_bbs(bbs):
+    result = {}
+    first_dict = bbs[0]
+    other_dicts = bbs[1:]
+    for bb, size in first_dict.items():
+        if all(bb not in d for d in other_dicts):
+            result[bb] = size
+    return result
+
+
 def process_set_of_files(path):
-    OP_INTERSECTION = 'intersect'
-    OP_DIFFERENCE = 'subtract'
-    OP_UNION = 'union'
-    supported_operations = {OP_INTERSECTION, OP_DIFFERENCE, OP_UNION}
+    supported_operations = {
+        'intersect': intersect_bbs,
+        'subtract': subtract_bbs,
+        'union': union_bbs
+    }
     with open(path, "r") as f:
         all_lines = [l.rstrip(' \t\n\r') for l in f.readlines()]
         lines = [l for l in all_lines if len(l)]
-    operation = lines[0]
-    if operation not in supported_operations:
+    op = supported_operations.get(lines[0])
+    if not op:
         raise Exception('Unsupported operation')
     lines = lines[1:]
     if len(lines) == 1:
@@ -99,23 +127,7 @@ def process_set_of_files(path):
     bbs = []
     for m in range(len(mod_list)):
         dicts = [f[1][m] for f in files]
-        res_dict = {}
-        bbs.append(res_dict)
-        if operation == OP_UNION:
-            for d in dicts:
-                res_dict.update(d)
-        else:
-            first_dict = dicts[0]
-            other_dicts = dicts[1:]
-            for bb, size in first_dict.items():
-                if operation == OP_INTERSECTION:
-                    to_add = all(bb in d for d in other_dicts)
-                elif operation == OP_DIFFERENCE:
-                    to_add = all(bb not in d for d in other_dicts)
-                else:
-                    assert False
-                if to_add:
-                    res_dict[bb] = size
+        bbs.append(op(dicts))
     return [mod_list, bbs]
 
 
