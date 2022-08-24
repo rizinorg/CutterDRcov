@@ -1,5 +1,6 @@
 import cutter
 from .extras import hex_pad, file_name
+
 def get_module_idx(modules, module):
     for i in range(len(modules)):
         if modules[i]['name'] == module:
@@ -10,7 +11,7 @@ def get_module_idx(modules, module):
 
 def analyse_function(function, base, covbbs):
     entry = ["", function['name'], hex_pad(function['offset'], 8), "", ""]
-    bbs = cutter.cmdj("afbj @" + function['name'])
+    bbs = cutter.cmdj("afbj @ " + function['name'])
     inst_count = 0
     inst_hits = 0
     bbs_count = 0

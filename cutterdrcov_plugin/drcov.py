@@ -3,7 +3,7 @@ import struct
 from .extras import file_name
 
 MIN_DRCOV_FILE_SIZE = 20
-DRCOV_VERSION = 2
+DRCOV_VERSION = 3
 
 DRCOV_HEADER_RE = r"DRCOV VERSION: (?P<version>\d+)\n"
 MODULE_HEADER_V2_RE = r"Module Table: version (?P<version>\d+), count (?P<mod_num>\d+)\n"
@@ -75,6 +75,7 @@ def dead_module_elimination(modules, bbs):
     for i in delete:
         del bbs[i]
         del modules[i]
+        
 def load(path):
     drcov_file = open(path, "rb")
     modules = read_module_list(drcov_file)
